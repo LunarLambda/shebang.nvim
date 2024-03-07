@@ -19,9 +19,11 @@ local INTERPRETERS = {
     default = { '/usr/bin/env', 'bash' }
 }
 
+local SHELLS = { 'bash', 'csh', 'fish', 'sh', 'tcsh', 'zsh' }
+
 local OPTIONS = {
     interpreters = INTERPRETERS,
-    auto_insert = false,
+    auto_insert = {},
     auto_chmod = true,
     new_modified = false,
 }
@@ -132,6 +134,10 @@ end
 
 function M.setup(opts)
     opts = vim.tbl_deep_extend('keep', opts or {}, OPTIONS)
+
+    if opts.auto_insert == 'shell' then
+        opts.auto_insert = SHELLS
+    end
 
     M.config = opts
 
